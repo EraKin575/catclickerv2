@@ -41,7 +41,7 @@ const CatShow = () => {
 
   return (
     
-    <div className='w-[550px] md:w-max ml-[10%] sm:ml-[30%] px-6 border-2 rounded-md border-gray-400'>
+    <div className='w-[550px] md:w-max  sm:ml-[30%] px-6 border-2 rounded-md border-gray-400'>
       <h1
       className='text-2xl font-bold text-center'
       >Cat Info</h1>
