@@ -5,6 +5,7 @@ import CatShow from './components/CatShow'
 import CatList from './components/CatList'
 import { RecoilRoot } from 'recoil'
 import CatGallery from './components/CatGallery'
+import CatForm from './components/CatForm'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,8 +13,16 @@ function App() {
   return (
     <RecoilRoot>
     <div className="">
+      <h1
+        className='text-4xl text-center font-bold'
+      >
+        CatClicker
+      </h1>
       <CatList/>
+      <div className='flex flex-wrap'>
       <CatShow/>
+      <CatForm/>
+      </div>
       <CatGallery/>
     </div>
 

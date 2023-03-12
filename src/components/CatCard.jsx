@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import { createClient } from '@supabase/supabase-js';
 import { dataAtomOne } from '../atoms/dataAtomOne';
+import { dataAtomTwo } from '../atoms/dataAtomTwo';
 import { useRecoilState } from 'recoil';
 import { useRecoilValue } from 'recoil';
 
@@ -12,6 +13,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const CatCard = ({cat}) => {
     const [data, setData] = useRecoilState(dataAtomOne);
     const [clicks, setClicks] = useState(cat.numberOfClicks);
+    const dataTwo = useRecoilValue(dataAtomTwo);
     const handleClick=()=>{
         setClicks(clicks+1)
         setData(
@@ -26,7 +28,7 @@ const CatCard = ({cat}) => {
     return (
         <div className="w-[200px] ">
             <h1>{cat.catname}</h1>
-            <h1>{clicks}</h1>
+            <h1>{(dataTwo.catname===cat.catname)?dataTwo.numberOfClicks:cat.numberOfClicks}</h1>
             <div className="flex justify-between border-2 border-gray-500 py-3 w-full"
             onClick={
                 handleClick

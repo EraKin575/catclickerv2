@@ -4,11 +4,9 @@ import { dataAtomOne } from '../atoms/dataAtomOne'
 import { useRecoilValue } from 'recoil'
 import { useRecoilState } from 'recoil'
 import { dataAtomTwo } from '../atoms/dataAtomTwo'
+import Age from '../Age/Age'
 
-const supabaseUrl="https://tblreflntfstusictxrk.supabase.co"
-const supabaseAnonKey="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRibHJlZmxudGZzdHVzaWN0eHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzgwOTc3NjcsImV4cCI6MTk5MzY3Mzc2N30.Z7qoRGapi2Pn4z_rVdg9cohZV3C7po3gdjo_SVGKOmc"
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 
 const CatShow = () => {
@@ -43,21 +41,27 @@ const CatShow = () => {
 
   return (
     
-    <div className='w-max ml-[30%] border-2 border-gray-400'>
-        <h1>{data?data.catname:"Loading..."}</h1>
-        <h1 className='w-max'>Number Of Clicks: {data?data.numberOfClicks:"Loading..."}</h1>
+    <div className='w-[550px] md:w-max ml-[10%] sm:ml-[30%] px-6 border-2 rounded-md border-gray-400'>
+      <h1
+      className='text-2xl font-bold text-center'
+      >Cat Info</h1>
+        <h1><span className='font-bold'>Name</span>:{data?data.catname:"Loading..."}</h1>
+        <h1 className='w-max'><span className='font-bold'>Number Of Clicks:</span> {data?data.numberOfClicks:"Loading..."}</h1>
         <div
-        className=' h-[300px] w-[300px] bg-gray-800 text-gray-100 p-2 transition-all duration-500 ease-in-out mt-1'
+        className=' h-[200px] md:w-[300px] bg-gray-800 text-gray-100 p-2 transition-all duration-500 ease-in-out mt-1'
         onClick={handleClick}
         >
 
-        <image src="/rj" className='w-[400px] h-[300px]' alt="cat"
+        <image src="/rj" className='w-max md:w-[400px] h-[200px]' alt="cat"
         
         
         />
         </div>
+        <h1
+        className='font-bold'
+        >  Description</h1>
         <h1>{data.Description}</h1>
-        <h1></h1>
+        <h1><span className='font-bold'>Age:</span>{Age(data.numberOfClicks)}</h1>
         <a href='https://www.google.com'>Google</a>
 
     </div>

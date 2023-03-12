@@ -33,6 +33,7 @@ const CatList = () => {
       supabase
         .from('catclicker')
         .select('*')
+        .order('catname', { ascending: false })
         .then(({ data, error }) => {
           setCatList(data);
         });
@@ -54,7 +55,7 @@ const CatList = () => {
     });
   
     return (
-      <div className="w-1/2 relative">
+      <div className="w-1/2 fixed relative z-10">
         <button
           className="bg-gray-800 text-gray-100 rounded p-2 absolute top-0 left-0 z-10"
           onClick={() => {
