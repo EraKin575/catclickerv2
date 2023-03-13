@@ -72,22 +72,8 @@ const CatShow = () => {
 
   return (
     
-    <div className='w-[550px] md:w-max  sm:ml-[30%] px-6 border-2 rounded-md border-gray-400'>
-      <h1
-      className='text-2xl font-bold text-center'
-      >Cat Info</h1>
-        {toggle?<h1><span className='font-bold'>Name</span>:{data?data.catname:"Loading..."}</h1>:
-        <input
-        className='w-full border-2 border-gray-400 rounded-md p-2 mt-2'
-        type="text"
-        value={catData?catData.catname:data.catname}
-        onChange={(e)=>setCatData({...catData,catname:e.target.value})}
-        />}
-
-     
-        
-        <h1 className='w-max'><span className='font-bold'>Number Of Clicks:</span> {data?data.numberOfClicks:"Loading..."}</h1>
-        <div
+    <div className='w-[550px] md:w-max  sm:ml-[30%]  rounded-md border-gray-400'>
+           <div
         className=' h-[200px] md:w-[300px] bg-gray-800 text-gray-100 p-2 transition-all duration-500 ease-in-out mt-1'
         onClick={handleClick}
         >
@@ -97,7 +83,18 @@ const CatShow = () => {
         
         />
         </div>
-        <h1
+      <h1
+      className='text-3xl font-bold text-center '
+      >Cat Info</h1>
+       <div className='pl-6 space-y-3'>
+        {toggle?<h1 className='text-4xl'>{data?data.catname:"Loading..."}</h1>:
+        <input
+        className='w-full border-2 border-gray-400 rounded-md p-2 mt-2'
+        type="text"
+        value={catData?catData.catname:data.catname}
+        onChange={(e)=>setCatData({...catData,catname:e.target.value})}
+        />}
+      <h1
         className='font-bold'
         >  Description</h1>
         {toggle?<h1>{data.Description}</h1>:
@@ -107,15 +104,17 @@ const CatShow = () => {
         value={catData?catData.Description:data.Description}
         onChange={(e)=>setCatData({...catData,Description:e.target.value})}
         />}
+        <h1 className='w-max'><span className='font-bold'>Number Of Clicks:</span> {data?data.numberOfClicks:"Loading..."}</h1>
         
         <h1><span className='font-bold'>Age:</span>{Age(data.numberOfClicks)}</h1>
+        </div>
         {toggle?
           <button 
-        className='bg-blue-500 text-white p-2 rounded-md mt-2'
+        className='bg-blue-500 text-white p-2 rounded-md mt-2 ml-5'
         onClick={handleToggle}
         >Edit Cat</button>:
         <button
-        className='bg-blue-500 text-white p-2 rounded-md mt-2'
+        className='bg-blue-500 text-white p-2 rounded-md mt-2 ml-5'
         onClick={handleSave}
         >Save Cat</button>
 
