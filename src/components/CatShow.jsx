@@ -72,17 +72,15 @@ const CatShow = () => {
 
   return (
     
-    <div className='w-[550px] md:w-max  sm:ml-[30%]  rounded-md border-gray-400'>
-           <div
-        className=' h-[200px] md:w-[300px] bg-gray-800 text-gray-100 p-2 transition-all duration-500 ease-in-out mt-1'
-        onClick={handleClick}
-        >
+    <div className='w-[550px] md:w-max  sm:ml-[30%] border-2 shadow-md  rounded-md border-gray-400'>
+           
+        
 
-        <image src="/rj" className='w-max md:w-[400px] h-[200px]' alt="cat"
+        <img src={data?.catImageReference} className='w-max md:w-[400px] h-[250px]' onClick={handleClick} alt="cat"
         
         
         />
-        </div>
+       
       <h1
       className='text-3xl font-bold text-center '
       >Cat Info</h1>

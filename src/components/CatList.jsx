@@ -41,7 +41,9 @@ const CatList = () => {
   
     const handleCatClick = (cat) => {
       setData(cat);
+      console.log(cat)
     };
+  
   
     const catListItems = catList.map((cat) => {
       return (

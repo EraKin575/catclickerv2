@@ -18,28 +18,24 @@ const CatForm = () => {
   const [data, setData] = useRecoilState(dataAtomOne);
 
   const handleSubmit = () => {
-    supabase.storage
+    const {data,error}=supabase.storage
       .from('catimages')
-      .upload(`public/${formData.catname}.jpg`, file)
-      
-      .then((res) => {
-        setFormData((prev) => ({ ...prev, imageReference:res.data?.Key }));
-        console.log(res);
-      }
+      .upload(`public/${formData.catname}`, file[0]) 
+      .then( 
+        setFormData(
+          {...formData,
+           imageReference:`https://tblreflntfstusictxrk.supabase.co/storage/v1/object/public/catimages/public/${formData.catname}.${file[1]}` })       
       )
-      .catch((err) => {
-        console.log(err);
-      }
-      );
+    
       supabase.from('catclicker').insert([
         {
           catname: formData.catname,
-          catImageReference: formData.imageReference,
+          catImageReference:`https://tblreflntfstusictxrk.supabase.co/storage/v1/object/public/catimages/public/${formData.catname}`,
           Description: formData.description,
           numberOfClicks: 0,
         },
       ]).then((res) => {
-        console.log(res);
+        console.log(formData)
       }
       )
       .catch((err) => {
@@ -63,7 +59,7 @@ const CatForm = () => {
   };
 
   return (
-    <div className='border-2 px-6 border-gray-500 ml-4 pt-4'>
+    <div className='border-2 px-6 border-gray-500 pt-4 rounded-[10px] ml-[10%]'>
       <button
         className='bg-blue-500 mb-8 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
         onClick={() => {
@@ -77,15 +73,16 @@ const CatForm = () => {
         Open New Form
       </button>
       <div className='flex-col space-y-6 py-3'>
-        <input
-          type='text'
-          placeholder='Cat Name'
-          className='w-[250px] border-2 rounded-lg border-gray-500 h-14'
-          value={formData.catname}
+      <div class="relative">
+    <input type="text" id={'asd'} className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-bg text-gray-900 bg-gray-50 dark:bg-gray-300 border-2 appearance-none dark:text-black dark:border-gray-600 focus:border-orange-300 peer" placeholder=" " value={formData.catname}
           onChange={(e) =>
             setFormData({ ...formData, catname: e.target.value })
-          }
-        />
+          } />
+    <label for={'asd'} className="absolute text- text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 bg-white px-1.5 origin-[0] left-2.5 peer-focus:text-blue-600 focus:bg-white peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-7 bg-transparent">
+        <span className='text-red-500' ></span>
+        Cat Name
+   </label>
+</div>
         <br />
         <h1>Image</h1>
         <input
@@ -94,19 +91,20 @@ const CatForm = () => {
           className='w-[250PX]'
           onChange={
             (e) => {
-            setFile(e.target.files[0])}
+            setFile([e.target.files[0],e.target.files[0].type])}
           }
         />
         <br />
-        <input
-          type='text'
-          placeholder='Description'
-          className='w-[250px] border-2 rounded-lg border-gray-400 h-14'
-          value={formData.description}
+        <div class="relative">
+    <input type="text" id={"asd"} className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-bg text-gray-900 bg-gray-50 dark:bg-gray-200 border-2 appearance-none dark:text-black dark:border-gray-600 focus:border-orange-300 peer" placeholder=" " value={formData.description}
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
-          }
-        />
+          } />
+    <label for={"asd"} className="absolute text- text-gray-900 dark:text-gray-900 duration-300 transform -translate-y-4 scale-75 top-4 z-10 bg-white px-1.5 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-7">
+        <span className='text-red-500'></span>
+        Description
+    </label>
+</div>
       </div>
       <div className='flex space-x-4 mt-4'>
         <button
@@ -117,10 +115,10 @@ const CatForm = () => {
         </button>
         <button
           onClick={handleCancel}
-          className='bg-blue-500 mb-8 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+          className='bg-red-500 mb-8 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
         >
           Cancel
-        </button>
+        </button> 
       </div>
     </div>
   );

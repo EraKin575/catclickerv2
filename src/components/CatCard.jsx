@@ -26,16 +26,17 @@ const CatCard = ({cat}) => {
 
 
     return (
-        <div className="w-[200px] ">
-            <h1>{cat.catname}</h1>
-            <h1>{(dataTwo.catname===cat.catname)?dataTwo.numberOfClicks:cat.numberOfClicks}</h1>
+        <div className="w-[400px] md:w-[250px]  sm:ml-[30%]  rounded-md border-gray-400">
             <div className="flex justify-between border-2 border-gray-500 py-3 w-full"
             onClick={
                 handleClick
             }
             >
-                <img src='/d' alt="cat"/>
+            <img src={dataTwo.catname===cat.catname?dataTwo.catImageReference:cat.catImageReference} alt="cat"/>
             </div>
+            <h1 className="text-2xl">{cat.catname}</h1>
+            <h1><span className="">Number of clicks :</span>{(dataTwo.catname===cat.catname)?dataTwo.numberOfClicks:cat.numberOfClicks}</h1>
+            
             <h1>{cat.description}</h1>
         </div>
 

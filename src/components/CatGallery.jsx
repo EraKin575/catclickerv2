@@ -31,12 +31,12 @@ const CatGallery = () => {
 
 
   return (
-    <div>
+    <div className=''>
         <h1
         className='text-4xl text-center font-bold'
         >Cat Gallery</h1>
     
-    <div className='grid grid-cols-5 grid-flow-row '>
+    <div className='grid grid-cols-3'>
         {catData}
 
 
