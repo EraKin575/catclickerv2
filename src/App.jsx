@@ -14,7 +14,7 @@ function App() {
     <RecoilRoot>
     <div className="">
       <h1
-        className='text-4xl text-center font-bold'
+        className='text-4xl text-center font-bold pt-3 pb-[30px]'
       >
         CatClicker
       </h1>

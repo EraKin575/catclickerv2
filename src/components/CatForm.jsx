@@ -1,60 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { dataAtomOne } from '../atoms/dataAtomOne';
 import { useRecoilState } from 'recoil';
+import { dataAtomOne } from '../atoms/dataAtomOne';
 
 const supabaseUrl = 'https://tblreflntfstusictxrk.supabase.co';
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRibHJlZmxudGZzdHVzaWN0eHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzgwOTc3NjcsImV4cCI6MTk5MzY3Mzc2N30.Z7qoRGapi2Pn4z_rVdg9cohZV3C7po3gdjo_SVGKOmc"
+const supabaseKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRibHJlZmxudGZzdHVzaWN0eHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzgwOTc3NjcsImV4cCI6MTk5MzY3Mzc2N30.Z7qoRGapi2Pn4z_rVdg9cohZV3C7po3gdjo_SVGKOmc';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const CatForm = () => {
-  
-  const [formData, setFormData] = React.useState({
+  const [file, setFile] = useState(null);
+  const [formData, setFormData] = useState({
     catname: '',
     imageReference: '',
     description: '',
   });
   const [data, setData] = useRecoilState(dataAtomOne);
 
-  const insertData = async () => {
-    const { data, error } = await supabase.from('catclicker').insert([
-      {
-        catname: formData.catname,
-        catImageReference: formData.imageReference,
-        Description: formData.description,
-        numberOfClicks: 0
-      },
-    ]);
-    ///select by name
-    const recentRecordData = await supabase
+  const handleSubmit = () => {
+    supabase.storage
+      .from('catimages')
+      .upload(`public/${formData.catname}.jpg`, file)
+      
+      .then((res) => {
+        setFormData((prev) => ({ ...prev, imageReference:res.data?.Key }));
+        console.log(res);
+      }
+      )
+      .catch((err) => {
+        console.log(err);
+      }
+      );
+      supabase.from('catclicker').insert([
+        {
+          catname: formData.catname,
+          catImageReference: formData.imageReference,
+          Description: formData.description,
+          numberOfClicks: 0,
+        },
+      ]).then((res) => {
+        console.log(res);
+      }
+      )
+      .catch((err) => {
+        console.log(err);
+      }
+      );
+      
+      const recentRecordData =supabase
         .from('catclicker')
         .select('*')
         .eq('catname', formData.catname);
-    
-    setData(recentRecordData.data[0]);
-    
-  };
-
-  const insertImage = async (e) => {
-    const file = e.target.files[0];
-    const { data, error } = await supabase.storage.from('catimages').upload(
-      formData.catname,
-      file,
-      {
-        cacheControl: '3600',
-        upsert: false,
-      }
-    );
-    console.log(data);
-    setFormData((prev) => ({ ...prev, imageReference:[formData.catname] }));
-  };
-
-  const handleChange = (e) => {
-    insertImage(e);
-  };
-
-  const handleSubmit = () => {
-    insertData();
+      setData(recentRecordData.data[0]);
   };
 
   const handleCancel = () => {
@@ -95,7 +92,10 @@ const CatForm = () => {
           type='file'
           placeholder='Choose Image'
           className='w-[250PX]'
-          onChange={handleChange}
+          onChange={
+            (e) => {
+            setFile(e.target.files[0])}
+          }
         />
         <br />
         <input

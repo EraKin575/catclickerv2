@@ -20,7 +20,7 @@ const CatShow = () => {
   const data = useRecoilValue(dataAtomOne);
   const [catData, setCatData] = useState(data);
   const [dataTwo, setDataTwo] = useRecoilState(dataAtomTwo);
-  const [toggle,setToggle]=useState(false)
+  const [toggle,setToggle]=useState(true)
   console.log(data)
   const handleToggle=()=>{
     setToggle(!toggle)
@@ -59,6 +59,7 @@ const CatShow = () => {
     )
     .then(({ data, error }) => {
       setToggle(!toggle)
+
       window.location.reload(false)
 
   }
