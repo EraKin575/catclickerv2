@@ -24,7 +24,7 @@ const CatForm = () => {
       .then( 
         setFormData(
           {...formData,
-           imageReference:`https://tblreflntfstusictxrk.supabase.co/storage/v1/object/public/catimages/public/${formData.catname}.${file[1]}` })       
+           imageReference:`https://tblreflntfstusictxrk.supabase.co/storage/v1/object/public/catimages/public/${file[1]}` })       
       )
     
       supabase.from('catclicker').insert([
@@ -92,7 +92,7 @@ const CatForm = () => {
           className='w-[250PX]'
           onChange={
             (e) => {
-            setFile([e.target.files[0],e.target.files[0].type])}
+            setFile([e.target.files[0],e.target.files[0].name])}
           }
         />
         <br />

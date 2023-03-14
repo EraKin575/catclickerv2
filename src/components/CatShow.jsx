@@ -51,19 +51,13 @@ const CatShow = () => {
   }
   const handleSave=()=>{
 
-    supabase.storage.from('catimages').upload('public/'+data.catname, file[0], {
-      cacheControl: '3600',
-      upsert: false,
-    })
-    .then(({ data, error }) => {
-      console.log(data)
-    })
+    supabase.storage.from('catimages').upload('public/'+catData.catname, file[0])
 
 
     supabase
     .from('catclicker')
     .update({ catname: catData.catname,Description:catData.Description,
-      catImageReference:`https://tblreflntfstusictxrk.supabase.co/storage/v1/object/public/catimages/public/${data.catname}`
+      catImageReference:`https://tblreflntfstusictxrk.supabase.co/storage/v1/object/public/catimages/public/${file[1]}`
      })
     .eq(
       'catname',data.catname
@@ -96,7 +90,7 @@ const CatShow = () => {
         <input
         className='w-full border-2 border-gray-400 rounded-md p-2 mt-2'
         type="file"
-        onChange={(e)=>setfile([e.target.files[0],e.target.files[0].type])}
+        onChange={(e)=>setfile([e.target.files[0],e.target.files[0].name])}
         />
         
 
