@@ -18,6 +18,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const CatShow = () => {
   const data = useRecoilValue(dataAtomOne);
+  const [file,setfile]=useState(null)
   const [catData, setCatData] = useState(data);
   const [dataTwo, setDataTwo] = useRecoilState(dataAtomTwo);
   const [toggle,setToggle]=useState(true)
@@ -50,9 +51,20 @@ const CatShow = () => {
   }
   const handleSave=()=>{
 
+    supabase.storage.from('catimages').upload('public/'+data.catname, file[0], {
+      cacheControl: '3600',
+      upsert: false,
+    })
+    .then(({ data, error }) => {
+      console.log(data)
+    })
+
+
     supabase
     .from('catclicker')
-    .update({ catname: catData.catname,Description:catData.Description })
+    .update({ catname: catData.catname,Description:catData.Description,
+      catImageReference:`https://tblreflntfstusictxrk.supabase.co/storage/v1/object/public/catimages/public/${data.catname}`
+     })
     .eq(
       'catname',data.catname
 
@@ -76,10 +88,19 @@ const CatShow = () => {
            
         
 
-        <img src={data?.catImageReference} className='w-max md:w-[400px] h-[250px]' onClick={handleClick} alt="cat"
+        {toggle?<img src={data?.catImageReference} className='w-max md:w-[400px] h-[250px]' onClick={handleClick} alt="cat"
+
         
         
+        />:
+        <input
+        className='w-full border-2 border-gray-400 rounded-md p-2 mt-2'
+        type="file"
+        onChange={(e)=>setfile([e.target.files[0],e.target.files[0].type])}
         />
+        
+
+  }
        
       <h1
       className='text-3xl font-bold text-center '

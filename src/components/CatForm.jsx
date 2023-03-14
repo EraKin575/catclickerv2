@@ -56,6 +56,7 @@ const CatForm = () => {
       imageReference: '',
       description: '',
     });
+    window.location.reload();
   };
 
   return (
